@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Psicoterapia | Alexandre Kuszer</title>
+  <meta name="description" content="Descubra como a psicoterapia pode ajudar a viver com mais equilíbrio emocional, relações mais saudáveis e decisões mais seguras." />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-900: #0d2863;
+      --blue-800: #0d3280;
+      --gray-700: #374151;
+      --gray-500: #6b7280;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #111827;
+      background: radial-gradient(circle at 10% 10%, #2a4e9e 0%, #0d2863 45%, #091e4b 100%);
+      line-height: 1.55;
+      padding: 18px;
+    }
+
+    .container { max-width: 1180px; margin: 0 auto; display: grid; gap: 24px; padding-bottom: 40px; }
+
+    .panel {
+      background: var(--white);
+      border-radius: 24px;
+      border: 3px solid var(--blue-900);
+      box-shadow: 0 20px 45px rgba(0,0,0,.13);
+      overflow: hidden;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+    }
+
+    .hero-content { padding: 42px; }
+    .hero h1 { margin: 0 0 12px; color: var(--blue-900); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12; }
+    .hero p { margin: 0 0 12px; color: var(--gray-700); }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .section { padding: 34px; }
+    .title { margin: 0 0 10px; text-align: center; color: var(--blue-900); font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .subtitle { margin: 0 auto 24px; max-width: 760px; text-align: center; color: var(--gray-500); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #f5f7fd;
+      border-left: 4px solid var(--blue-900);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 420px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card i { color: var(--blue-900); font-size: 1.3rem; }
+    .card h3 { margin: 0; }
+    .card p { margin: 0; color: var(--gray-700); font-size: .95rem; }
+
+    .approaches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .approach {
+      background: #f8faff;
+      border: 1px solid #dde5f8;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .approach i { color: var(--blue-900); font-size: 1.4rem; margin-bottom: 8px; }
+    .approach h3 { margin: 0 0 8px; color: #132a5f; }
+    .approach p { margin: 0 0 10px; color: #334155; font-size: .95rem; }
+
+    
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+
+    .faq details {
+      background: #f8faff;
+      border: 1px solid #dde5f8;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      color: var(--blue-900);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .faq summary::after {
+      content: "＋";
+      font-size: .78rem;
+      color: var(--blue-900);
+      font-weight: 700;
+    }
+
+    .faq details[open] summary::after {
+      content: "－";
+    }
+    .faq p { color: var(--gray-700); margin: 10px 0 0; }
+
+    .final {
+      background: #f5f8ff;
+      text-align: center;
+      padding: 36px 24px;
+      border-top: 1px solid #dce5fb;
+    }
+
+    .final h2 { margin: 0 0 10px; color: var(--blue-900); }
+    .final p { margin: 0 auto; max-width: 740px; color: #334155; }
+
+    .cta-row { margin-top: 14px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      min-height: 48px;
+      padding: 12px 18px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary { background: linear-gradient(135deg, var(--blue-900), var(--blue-800)); color: #fff; }
+    .btn-ghost { background: #eef2ff; color: var(--blue-900); border: 1px solid #dbe3ff; }
+
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .hero-content, .section { padding: 20px 18px; }
+      .cta-row { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .card { min-height: auto; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="panel hero">
+      <div class="hero-content">
+        <h1>O que é uma consulta psicológica e para que serve a psicoterapia?</h1>
+        <p>
+          A consulta psicológica é um espaço seguro para ser escutado com profundidade, sem julgamento e com direção clínica.
+          É o momento em que deixa de carregar tudo sozinho e começa a compreender, com clareza, o que está por trás da ansiedade,
+          da tristeza, dos conflitos e da sensação de estar sempre no limite.
+        </p>
+        <p>
+          A psicoterapia serve para transformar sofrimento em mudança concreta: melhora a forma como lida com emoções,
+          fortalece relações, ajuda a tomar decisões mais seguras e devolve sentido ao seu dia a dia.
+          Não é apenas “falar sobre problemas” — é construir novas formas de viver.
+        </p>
+        <p>
+          Com acompanhamento profissional, passa a reconhecer padrões que se repetem, criar recursos internos e avançar com mais
+          equilíbrio, presença e confiança.
+        </p>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.squarespace-cdn.com/content/v1/6399b331dd2a5d7ead6f2b9c/397c78c9-7661-4c6f-94a0-1051d534927a/_390bc407-9985-4e91-9a47-a831fc326a65.jpg?format=2500w" alt="Psicólogo Alexandre Kuszer em atendimento" />
+      </div>
+    </section>
+
+    <section class="panel section">
+      <h2 class="title">Tipos de Consultas</h2>
+      <p class="subtitle">Entenda de forma simples qual modalidade faz mais sentido para o seu momento.</p>
+      <div class="cards">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=1200&q=80" alt="Terapeuta em consulta individual com paciente" />
+          <div class="card-body">
+            <i class="fas fa-user"></i>
+            <h3>Consulta Individual</h3>
+            <p>
+              É um espaço focado em si: nas suas emoções, dificuldades e objetivos pessoais. Aqui trabalha ansiedade, autoestima,
+              tristeza, bloqueios e decisões importantes com um plano terapêutico adaptado à sua realidade.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80" alt="Terapeuta em sessão com casal" />
+          <div class="card-body">
+            <i class="fas fa-heart"></i>
+            <h3>Consulta de Casal</h3>
+            <p>
+              Indicada quando o relacionamento precisa de mediação e novas formas de diálogo. A terapia de casal ajuda a reduzir
+              conflitos repetitivos, reconstruir confiança e criar acordos mais saudáveis para a vida a dois.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" alt="Terapeuta em consulta com família" />
+          <div class="card-body">
+            <i class="fas fa-house-user"></i>
+            <h3>Consulta de Família</h3>
+            <p>
+              Quando o sofrimento envolve mais do que uma pessoa, trabalha-se a dinâmica familiar como um todo. O objetivo é melhorar
+              comunicação, reorganizar papéis e fortalecer vínculos para que a família volte a funcionar com mais harmonia.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <h2 class="title">Abordagens Terapêuticas Integrativas</h2>
+      <p class="subtitle">Duas formas integradas de cuidar da sua saúde emocional, explicadas de forma clara e prática.</p>
+      <div class="approaches">
+        <article class="approach">
+          <i class="fas fa-spa"></i>
+          <h3>Psicoterapia Reichiana</h3>
+          <p>
+            Esta abordagem considera que corpo e emoções estão ligados. Muitas vezes, guardamos tensões no corpo sem perceber,
+            e isso mantém ansiedade, irritação, cansaço e sensação de bloqueio.
+          </p>
+          <p>
+            Na prática, a terapia ajuda a identificar esses padrões e a libertar formas antigas de reagir, para que possa sentir
+            mais espontaneidade, vitalidade e presença na sua vida.
+          </p>
+        </article>
+
+        <article class="approach">
+          <i class="fas fa-network-wired"></i>
+          <h3>Psicoterapia Sistémica</h3>
+          <p>
+            Esta abordagem olha para si dentro das suas relações (casal, família, trabalho), porque muitos problemas emocionais
+            também são influenciados pela forma como nos ligamos aos outros.
+          </p>
+          <p>
+            O trabalho terapêutico ajuda a quebrar ciclos de conflito, melhorar comunicação e criar relações mais claras,
+            seguras e equilibradas no dia a dia.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section faq">
+      <h2 class="title">Perguntas Frequentes</h2>
+      <div class="faq-grid">
+      <details>
+        <summary>Para que serve a psicoterapia no dia a dia?</summary>
+        <p>Serve para compreender o que está a gerar sofrimento, melhorar a gestão emocional e criar mudanças práticas na forma como vive, se relaciona e decide.</p>
+      </details>
+      <details>
+        <summary>Porque procurar um psicólogo mesmo sem estar em “crise”?</summary>
+        <p>Porque a terapia também é prevenção e crescimento pessoal. Não é apenas para momentos extremos; é para viver com mais equilíbrio e qualidade de vida.</p>
+      </details>
+      <details>
+        <summary>Como funciona a primeira consulta?</summary>
+        <p>Na primeira sessão é feita uma avaliação da sua necessidade atual, dos objetivos e da modalidade mais indicada para o seu caso.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo dura um processo terapêutico?</summary>
+        <p>Depende dos objetivos e da profundidade da questão. Pode ser breve ou mais prolongado; o percurso é ajustado consigo ao longo do processo.</p>
+      </details>
+      <details>
+        <summary>Com que frequência devo fazer as consultas?</summary>
+        <p>Habitualmente semanal ou quinzenal, dependendo da fase terapêutica e da sua disponibilidade.</p>
+      </details>
+      <details>
+        <summary>As consultas podem ser online e presenciais?</summary>
+        <p>Sim. O formato é definido conforme necessidade clínica, localização e rotina, para garantir continuidade no processo.</p>
+      </details>
+      <details>
+        <summary>Como sei se estou a evoluir na psicoterapia?</summary>
+        <p>Os avanços aparecem no dia a dia: melhor regulação emocional, decisões mais seguras, relações mais equilibradas e maior sensação de clareza interna.</p>
+      </details>
+      <details>
+        <summary>Posso interromper e retomar a terapia mais tarde?</summary>
+        <p>Sim. A terapia pode ser ajustada à sua realidade. Quando necessário, pode pausar e retomar com plano de continuidade clínica.</p>
+      </details>
+      <details>
+        <summary>A consulta é confidencial?</summary>
+        <p>Sim. O sigilo profissional é um princípio central da prática psicológica, respeitando os limites éticos e legais da profissão.</p>
+      </details>
+      <details>
+        <summary>Como funciona a política de falta e remarcação?</summary>
+        <p>Quando uma falta ou remarcação não é comunicada com pelo menos 24 horas de antecedência, a consulta é cobrada integralmente. Em situações de adversidade devidamente justificada, o caso é avaliado com flexibilidade.</p>
+      </details>
+      </div>
+    </section>
+
+    <section class="panel final">
+      <h2>Se quer sentir-se melhor e viver com mais clareza emocional, este pode ser o seu ponto de viragem.</h2>
+      <p>Agende a sua consulta e inicie um processo terapêutico estruturado para compreender, transformar e avançar com mais confiança.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/agendamento.html" target="_blank"><i class="fas fa-calendar-plus"></i>Agendar agora</a>
+        <a class="btn btn-ghost" href="https://wa.me/351910238130?text=Ol%C3%A1!%20Gostava%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20psicoterapia." target="_blank"><i class="fab fa-whatsapp"></i>Falar no WhatsApp</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
