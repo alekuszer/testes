@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agendamento de Consultas | Alexandre Kuszer</title>
+  <meta name="description" content="Agende consulta online ou presencial com seleção de disponibilidade em tempo real." />
+  <style>
+    :root { --blue-900:#0d2863; --blue-800:#0d3280; --gray-700:#374151; --gray-500:#6b7280; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:#111827; background:radial-gradient(circle at 10% 10%, #2a4e9e 0%, #0d2863 45%, #091e4b 100%); padding:18px; }
+    .container { max-width:980px; margin:0 auto; }
+    .panel { background:#fff; border-radius:24px; border:3px solid var(--blue-900); box-shadow:0 20px 45px rgba(0,0,0,.13); padding:30px; }
+    h1 { margin:0 0 8px; color:var(--blue-900); }
+    .subtitle { margin:0 0 24px; color:var(--gray-500); }
+    .step { border:1px solid #dde5f8; border-radius:14px; padding:16px; margin-bottom:12px; background:#f8faff; }
+    .step h3 { margin:0 0 10px; color:#12306f; font-size:1.1rem; }
+    .row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .chips { display:flex; flex-wrap:wrap; gap:10px; }
+    .chip, .slot { border:1px solid #c9d6f5; background:#fff; color:#12306f; border-radius:999px; padding:10px 14px; cursor:pointer; font-weight:700; }
+    .chip.active, .slot.active { background:var(--blue-900); color:#fff; border-color:var(--blue-900); }
+    label { font-size:.9rem; color:#334155; margin-bottom:5px; display:block; }
+    input, textarea, select { width:100%; padding:10px 12px; border:1px solid #cfd8ed; border-radius:10px; font:inherit; }
+    textarea { min-height:80px; }
+    .hidden { display:none; }
+    .error { color:#b91c1c; margin-top:10px; font-size:.9rem; }
+    .success { color:#166534; margin-top:10px; font-size:.95rem; }
+    .btn { margin-top:12px; border:none; border-radius:999px; padding:12px 16px; font-weight:700; background:linear-gradient(135deg,var(--blue-900),var(--blue-800)); color:#fff; cursor:pointer; }
+    .summary { background:#eef2ff; border-radius:12px; padding:12px; color:#1e3a8a; margin-top:8px; }
+    .muted { color:#6b7280; font-size:.9rem; }
+    @media (max-width:768px){ .row{grid-template-columns:1fr;} .panel{padding:20px 16px;} }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="panel">
+      <h1>Agendamento de Consultas</h1>
+      <p class="subtitle">Escolha modalidade, tipo de atendimento, data e horário com base na disponibilidade real da agenda.</p>
+
+      <div class="step" id="step1">
+        <h3>Etapa 1 · Modalidade</h3>
+        <div class="chips" id="modalityChoices">
+          <button class="chip" data-value="online">Online</button>
+          <button class="chip" data-value="presencial">Presencial</button>
+        </div>
+      </div>
+
+      <div class="step hidden" id="step2">
+        <h3>Etapa 2 · Tipo de atendimento</h3>
+        <div class="chips" id="serviceChoices">
+          <button class="chip" data-value="individual">Individual (60 min)</button>
+          <button class="chip" data-value="casal">Casal (90 min)</button>
+          <button class="chip" data-value="familia">Família (90 min)</button>
+        </div>
+      </div>
+
+      <div class="step hidden" id="step3">
+        <h3>Etapa 3 · Data e horário</h3>
+        <div class="row">
+          <div>
+            <label for="date">Selecione a data</label>
+            <input type="date" id="date" />
+          </div>
+        </div>
+        <p class="muted">Horários disponíveis são calculados automaticamente com base no Google Calendar e na duração escolhida.</p>
+        <div class="chips" id="slots"></div>
+      </div>
+
+      <div class="step hidden" id="step4">
+        <h3>Etapa 4 · Dados do paciente</h3>
+        <div class="row">
+          <div><label for="fullName">Nome completo</label><input id="fullName" /></div>
+          <div><label for="email">E-mail</label><input id="email" type="email" /></div>
+          <div><label for="phone">Telefone / WhatsApp</label><input id="phone" /></div>
+          <div><label for="notes">Observação (opcional)</label><textarea id="notes"></textarea></div>
+        </div>
+      </div>
+
+      <div class="step hidden" id="step5">
+        <h3>Etapa 5 · Confirmar agendamento</h3>
+        <div class="summary" id="summary"></div>
+        <button class="btn" id="confirmBtn">Confirmar agendamento</button>
+        <p class="error" id="error"></p>
+        <p class="success" id="success"></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = { modality:null, serviceType:null, date:null, slot:null };
+    const modalityLabels = { online:'Online', presencial:'Presencial' };
+    const typeLabels = { individual:'Individual', casal:'Casal', familia:'Família' };
+    const durations = { individual:60, casal:90, familia:90 };
+    const clinicAddress = 'Av. Comendador Ferreira de Matos 122, 1 andar C 3, Matosinhos, Porto';
+
+    const $ = (id) => document.getElementById(id);
+
+    function toggleStep(id, show=true){ $(id).classList[show ? 'remove' : 'add']('hidden'); }
+
+    function setActive(containerId, value){
+      document.querySelectorAll(`#${containerId} .chip`).forEach(btn=>btn.classList.toggle('active', btn.dataset.value===value));
+    }
+
+    async function loadSlots(){
+      if(!state.modality || !state.serviceType || !state.date) return;
+      $('slots').innerHTML = '<span class="muted">A carregar horários...</span>';
+      $('error').textContent = '';
+
+      const qs = new URLSearchParams({ date:state.date, modality:state.modality, serviceType:state.serviceType });
+      const resp = await fetch(`/api/availability?${qs}`);
+      const data = await resp.json();
+
+      if(!resp.ok){
+        $('slots').innerHTML = '';
+        $('error').textContent = data.error || 'Não foi possível carregar horários.';
+        return;
+      }
+
+      $('slots').innerHTML = '';
+      if(!data.slots.length){
+        $('slots').innerHTML = '<span class="muted">Sem horários disponíveis para esta data.</span>';
+        return;
+      }
+
+      data.slots.forEach(slot=>{
+        const btn = document.createElement('button');
+        btn.className = 'slot';
+        btn.textContent = slot.label;
+        btn.onclick = () => {
+          state.slot = slot;
+          document.querySelectorAll('#slots .slot').forEach(s=>s.classList.remove('active'));
+          btn.classList.add('active');
+          toggleStep('step4', true);
+          toggleStep('step5', true);
+          renderSummary();
+        };
+        $('slots').appendChild(btn);
+      });
+    }
+
+    function renderSummary(){
+      if(!state.slot) return;
+      $('summary').innerHTML = `
+        <strong>Resumo</strong><br>
+        Modalidade: ${modalityLabels[state.modality]}<br>
+        Tipo: ${typeLabels[state.serviceType]}<br>
+        Data: ${state.date}<br>
+        Horário: ${state.slot.label}<br>
+        Duração: ${durations[state.serviceType]} minutos<br>
+        Nome: ${$('fullName').value || '—'}<br>
+        ${state.modality === 'presencial' ? `Local: ${clinicAddress}` : 'Consulta online com Google Meet'}
+      `;
+    }
+
+    document.querySelectorAll('#modalityChoices .chip').forEach(btn=>btn.onclick=()=>{
+      state.modality = btn.dataset.value;
+      setActive('modalityChoices', state.modality);
+      toggleStep('step2', true);
+      state.serviceType = null; state.date=null; state.slot=null;
+      toggleStep('step3', false); toggleStep('step4', false); toggleStep('step5', false);
+    });
+
+    document.querySelectorAll('#serviceChoices .chip').forEach(btn=>btn.onclick=()=>{
+      state.serviceType = btn.dataset.value;
+      setActive('serviceChoices', state.serviceType);
+      toggleStep('step3', true);
+      state.slot=null;
+      toggleStep('step4', false); toggleStep('step5', false);
+    });
+
+    $('date').addEventListener('change', e=>{ state.date = e.target.value; state.slot = null; toggleStep('step4', false); toggleStep('step5', false); loadSlots(); });
+
+    ['fullName','email','phone','notes'].forEach(id=>$(id).addEventListener('input', renderSummary));
+
+    $('confirmBtn').addEventListener('click', async ()=>{
+      $('error').textContent = ''; $('success').textContent = '';
+      const payload = {
+        modality: state.modality,
+        serviceType: state.serviceType,
+        date: state.date,
+        start: state.slot?.start,
+        fullName: $('fullName').value.trim(),
+        email: $('email').value.trim(),
+        phone: $('phone').value.trim(),
+        notes: $('notes').value.trim(),
+      };
+
+      if(!payload.fullName || !payload.email || !payload.phone || !payload.start){
+        $('error').textContent = 'Preencha todos os campos obrigatórios antes de confirmar.';
+        return;
+      }
+
+      const resp = await fetch('/api/book', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await resp.json();
+
+      if(!resp.ok){
+        $('error').textContent = data.error || 'Não foi possível concluir o agendamento.';
+        return;
+      }
+
+      const extra = state.modality === 'online'
+        ? (data.event.meetLink ? `Link Google Meet: ${data.event.meetLink}` : 'Link Google Meet criado e associado ao evento.')
+        : `Local: ${data.event.location}`;
+
+      $('success').innerHTML = `Agendamento confirmado com sucesso.<br>${extra}`;
+    });
+  </script>
+</body>
+</html>

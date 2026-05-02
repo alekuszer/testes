@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alexandre Kuszer | Psicoterapia com acolhimento e direção</title>
+  <meta name="description" content="Psicoterapia individual, de casal e familiar com Alexandre Kuszer. Atendimento online e presencial." />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-900: #0d2863;
+      --blue-800: #0d3280;
+      --blue-100: #e8efff;
+      --gray-900: #111827;
+      --gray-700: #374151;
+      --gray-500: #6b7280;
+      --white: #fff;
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --shadow: 0 20px 45px rgba(0, 0, 0, .13);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at 10% 10%, #2a4e9e 0%, #0d2863 45%, #091e4b 100%);
+      color: var(--gray-900);
+      line-height: 1.55;
+      padding: 18px;
+    }
+
+    .container { max-width: 1180px; margin: 0 auto; display: grid; gap: 24px; padding-bottom: 40px; }
+
+    .panel {
+      background: var(--white);
+      border: 3px solid var(--blue-900);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: rise .8s ease;
+    }
+
+    .hero { display: grid; grid-template-columns: 1.05fr .95fr; }
+
+    .hero-content { padding: 46px 42px 30px; display: flex; flex-direction: column; gap: 16px; }
+
+    .hero h1 { margin: 0; color: var(--blue-900); font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; }
+
+    .hero p { margin: 0; color: var(--gray-700); font-size: 1.03rem; }
+
+    .emotional-copy {
+      background: #f7f9ff;
+      border-left: 4px solid var(--blue-900);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #24324b;
+      font-size: .96rem;
+    }
+
+    .quick-stats {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid #e5eaf5;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .stat strong { display: block; color: var(--blue-900); font-size: 1rem; margin-bottom: 4px; }
+    .stat span { color: var(--gray-500); font-size: .85rem; }
+
+    .hero-photo-wrap {
+      position: relative;
+      background: linear-gradient(150deg, #0d2863 0%, #0f3b96 100%);
+      padding: 20px;
+      display: grid;
+      align-content: center;
+    }
+
+     .hero-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: var(--radius-lg);
+      border: 2px solid rgba(255,255,255,.45);
+      box-shadow: 0 16px 35px rgba(0,0,0,.25);
+    }
+
+    .hero-photo-label {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(255,255,255,.94);
+      color: #1f2937;
+      border-radius: 12px;
+      padding: 11px 14px;
+      max-width: calc(100% - 60px);
+      font-size: .93rem;
+      border-left: 4px solid var(--blue-900);
+    }
+
+    .label-action {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background: var(--blue-900);
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .label-action:hover { background: var(--blue-800); }
+
+    .hero-actions {
+      padding: 0 42px 34px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      min-height: 52px;
+      padding: 14px 22px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary { color: #fff; background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 100%); box-shadow: 0 10px 22px rgba(13,40,99,.3); }
+    .btn-secondary { color: var(--blue-900); background: #eef2ff; border: 1px solid #dbe3ff; }
+
+    .section { padding: 34px; }
+    .title { margin: 0 0 10px; text-align: center; color: var(--blue-900); font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .subtitle { margin: 0 auto 24px; text-align: center; max-width: 760px; color: var(--gray-500); }
+
+    .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+
+    .impact {
+      background: #f5f7fd;
+      border-left: 4px solid var(--blue-900);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+    }
+
+    .impact i { color: var(--blue-900); font-size: 1.4rem; margin-bottom: 8px; }
+    .impact h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .impact p { margin: 0; color: var(--gray-700); font-size: .95rem; }
+
+    
+    .impact-visual {
+      margin: 0 auto 18px;
+      max-width: 760px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #dfe7fb;
+      box-shadow: 0 10px 26px rgba(13, 40, 99, .14);
+    }
+
+    .impact-visual img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .impact-action {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #e8efff;
+      color: var(--blue-900);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .impact-action:hover { background: #dbe6ff; }
+
+    .story { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+    .story-box { background: #fff; border: 1px solid #e6ebf5; border-radius: 14px; padding: 16px; color: #24324b; font-size: .95rem; }
+
+    .demands-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; align-items: start; }
+
+    .demand-item {
+      background: #f8faff;
+      border: 1px solid #dde5f8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .demand-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 14px 16px;
+      font-weight: 700;
+      color: var(--blue-900);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .demand-item summary::-webkit-details-marker { display: none; }
+    .demand-item summary::after { content: '+'; font-size: 1.1rem; color: var(--blue-900); }
+    .demand-item[open] summary::after { content: '–'; }
+
+    .demand-content {
+      padding: 0 16px 14px;
+      color: var(--gray-700);
+      font-size: .94rem;
+    }
+
+    .final-cta {
+      background: #f5f8ff;
+      color: var(--gray-900);
+      text-align: center;
+      padding: 42px 24px;
+      border-top: 1px solid #dce5fb;
+    }
+
+    .final-cta h2 { margin: 0 0 8px; font-size: clamp(1.5rem, 2.8vw, 2.2rem); color: var(--blue-900); }
+    .final-cta p { margin: 0 auto; max-width: 760px; color: #334155; }
+    .final-cta .hero-actions { padding: 22px 0 0; }
+
+    .btn-light { background: var(--blue-900); color: #fff; }
+    .btn-outline-light { background: #fff; color: var(--blue-900); border: 1px solid #d0dcfb; }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { min-height: 420px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .hero-content, .hero-actions, .section { padding-left: 18px; padding-right: 18px; }
+      .hero-content { padding-top: 26px; }
+      .hero-photo-wrap { padding: 16px; }
+      .hero-photo { min-height: 340px; }
+  
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .quick-stats { grid-template-columns: 1fr; }
+      .story { grid-template-columns: 1fr; }
+      .demands-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    
+    @media (max-width: 560px) {
+      .demands-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="panel hero">
+      <div>
+        <div class="hero-content">
+          <h1>Um espaço profissional para cuidar de si com clareza e confiança.</h1>
+          <p>
+            Muitas vezes, a pessoa chega cansada de tentar “dar conta de tudo” sozinha. A psicoterapia é o lugar onde
+            pode respirar, organizar a mente e reencontrar força para viver com mais presença, leveza e direção.
+          </p>
+          <div class="emotional-copy">
+            <strong>Se sente ansiedade, tristeza, conflitos nos relacionamentos ou sensação de bloqueio:</strong>
+            existe um caminho possível. Um processo terapêutico bem conduzido pode transformar sofrimento em clareza e ação.
+          </div>
+
+          <div class="quick-stats">
+            <div class="stat"><strong>Flexibilidade de atendimento</strong><span>Online e Presencial</span></div>
+            <div class="stat"><strong>Experiência intercultural</strong><span>PT + BR</span></div>
+            <div class="stat"><strong>Ética profissional</strong><span>Sigilo Total</span></div>
+            <div class="stat"><strong>Calendly e WhatsApp</strong><span>Agenda Rápida</span></div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/agendamento.html" target="_blank"><i class="fas fa-calendar-check"></i>Agendar Primeira Consulta</a>
+          <a class="btn btn-secondary" href="https://www.alexandrekuszer.com/valores" target="_blank"><i class="fas fa-file-invoice-dollar"></i>Ver Tarifários</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <img class="hero-photo" src="https://images.squarespace-cdn.com/content/v1/6399b331dd2a5d7ead6f2b9c/ea782606-6074-4a7b-8a7c-ef0dcd4ed2ba/IMG_0945.jpg?format=2500w" alt="Psicólogo Alexandre Kuszer" />
+        <div class="hero-photo-label">
+          <strong>Alexandre Kuszer</strong><br />
+          Psicólogo com atendimento humanizado para adultos, casais e famílias.<br />
+          <a class="label-action" href="https://www.alexandrekuszer.com/psicologo" target="_blank"><i class="fas fa-user-check"></i>Saber mais</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <h2 class="title">O que pode mudar na sua vida com terapia</h2>
+      <p class="subtitle">Conheça as principais áreas de intervenção e saiba mais sobre o processo terapêutico.</p>
+      <div class="impact-visual">
+        <img src="https://images.squarespace-cdn.com/content/v1/6399b331dd2a5d7ead6f2b9c/745ca049-755a-45c5-a990-54b51067a2da/_028a7396-8a57-44ff-b88a-c60bd17f72f4.jpg?format=2500w" alt="Psicólogo Alexandre Kuszer em contexto de atendimento" />
+      </div>
+      <div class="impact-grid">
+        <article class="impact">
+          <i class="fas fa-user"></i>
+          <h3>Psicoterapia Individual</h3>
+          <p>Redução de ansiedade, melhoria da autoestima, organização emocional e mais segurança para decidir.</p>
+          <a class="impact-action" href="https://www.alexandrekuszer.com/psicoterapia" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i>Ver psicoterapia</a>
+        </article>
+        <article class="impact">
+          <i class="fas fa-users"></i>
+          <h3>Terapia de Casal e Família</h3>
+          <p>Reconstrução de diálogo, cuidado com feridas relacionais e fortalecimento de vínculos importantes.</p>
+          <a class="impact-action" href="https://www.alexandrekuszer.com/psicoterapia" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i>Ver psicoterapia</a>
+        </article>
+        <article class="impact">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h3>Acolhimento sem julgamentos</h3>
+          <p>Um espaço seguro para quem vive dor emocional, conflitos de identidade ou dificuldades de pertença.</p>
+          <a class="impact-action" href="https://www.alexandrekuszer.com/psicoterapia" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i>Ver psicoterapia</a>
+        </article>
+      </div>
+
+      <div class="story">
+        <div class="story-box">
+          <strong>Imagine acordar sem o mesmo peso no peito.</strong><br />
+          A terapia ajuda a compreender padrões que se repetem e a construir respostas emocionais mais saudáveis.
+        </div>
+        <div class="story-box">
+          <strong>Imagine voltar a falar com quem ama sem medo de explodir ou se calar.</strong><br />
+          Com método e acolhimento, as relações podem ser reparadas e fortalecidas.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <h2 class="title">Temas trabalhados em consulta</h2>
+      <p class="subtitle">Clique em cada tema para ver como a terapia pode ajudar.</p>
+
+      <div class="demands-grid">
+        <details class="demand-item"><summary>Ansiedade</summary><div class="demand-content">Trabalha-se a identificação de gatilhos, regulação emocional e desenvolvimento de estratégias para reduzir sintomas físicos e mentais de ansiedade.</div></details>
+        <details class="demand-item"><summary>Depressão</summary><div class="demand-content">A terapia ajuda a compreender o sofrimento depressivo, recuperar energia para o quotidiano e reconstruir sentido de vida, passo a passo.</div></details>
+        <details class="demand-item"><summary>Perdas e Lutos</summary><div class="demand-content">Oferece um espaço de elaboração da dor, respeitando o tempo de cada pessoa para integrar perdas e retomar o vínculo com a vida.</div></details>
+        <details class="demand-item"><summary>Relacionamentos</summary><div class="demand-content">Foca padrões de comunicação, limites, expectativas e formas mais saudáveis de construir relações afetivas e familiares.</div></details>
+        <details class="demand-item"><summary>Família</summary><div class="demand-content">Apoia na gestão de conflitos familiares, papéis, parentalidade e reorganização de vínculos em diferentes ciclos de vida.</div></details>
+        <details class="demand-item"><summary>Compulsões</summary><div class="demand-content">A intervenção terapêutica ajuda a reconhecer ciclos compulsivos e a desenvolver novas respostas para ansiedade, impulso e culpa.</div></details>
+        <details class="demand-item"><summary>Autoestima</summary><div class="demand-content">Trabalha crenças de desvalor, autocrítica e limites pessoais para promover uma relação interna mais segura e compassiva.</div></details>
+        <details class="demand-item"><summary>Imigração</summary><div class="demand-content">Apoio emocional para lidar com saudade, adaptação cultural, pertença e desafios de reconstruir vida noutro país.</div></details>
+        <details class="demand-item"><summary>Racismo e Xenofobia</summary><div class="demand-content">A psicoterapia oferece escuta qualificada para experiências de discriminação e construção de recursos de proteção emocional.</div></details>
+        <details class="demand-item"><summary>Envelhecimento</summary><div class="demand-content">Ajuda a lidar com mudanças físicas, emocionais e relacionais desta fase da vida, preservando autonomia e dignidade.</div></details>
+        <details class="demand-item"><summary>LGBTQIAPN+</summary><div class="demand-content">Espaço afirmativo para identidade, orientação, vínculos e enfrentamento de preconceito, com foco em autenticidade e bem-estar.</div></details>
+      </div>
+    </section>
+
+    <section class="panel final-cta">
+      <h2>O primeiro passo pode ser hoje.</h2>
+      <p>
+        Merece um espaço para ser escutado com respeito, profundidade e compromisso real com a sua mudança.
+        Agende a sua consulta e inicie um novo capítulo emocional na sua vida.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-light" href="/agendamento.html" target="_blank"><i class="fas fa-calendar-plus"></i>Agendar Consulta</a>
+        <a class="btn btn-outline-light" href="https://wa.me/351910238130?text=Ol%C3%A1!%20Gostava%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Alexandre%20Kuszer." target="_blank"><i class="fab fa-whatsapp"></i>Falar no WhatsApp</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
